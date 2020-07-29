@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>登録</title>
+    
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/myjs/myNodeModule.js"></script>
+    
+    <style>
+    .alert {
+      color: #a94442;
+      background-color: #f2dede;
+      border-color: #ebccd1;
+    }
+    </style>
+  </head>
+	<body>
+		<h1>メインメニュー</h1>
+
+		<form id="form" method="POST" action="">
+			<div>
+				<input id="main_btn_calc" type="button" name="test_regist" value="A計算3" onclick="btn_onclick('/main/calc')"/>
+			</div>
+			<div>
+				<input id="main_btn_search" type="button" name="test_search" value="A検索" onclick="btn_onclick('/main/searchStart')" />
+			</div>
+			<div>
+				<input id="main_btn_regist" type="button" name="test_regist" value="A登録" onclick="btn_onclick('/main/start')"/>
+			</div>
+			<div>
+				<input id="main_btn_regist" type="button" name="test_regist" value="A業務一覧" onclick="btn_onclick('/main/workFlowStart')"/>
+			</div>
+			<div>
+				<input id="main_btn_upload" type="button" name="test_upload" value="Aアップロード" onclick="btn_onclick('/main/upload')"/>
+			</div>
+		</form>
+<script>
+
+		//ウインドウが開いた時に発動-------------------------------------------------------------------------------------
+     	$(document).ready( function(){
+			document_onready();
+		});
+		// ドキュメント読み込み完了時に呼び出されます。
+		var document_onready = function (event) { //-------------------------------------
+																													console.log('-->>>>>>>>>>>>>--document_onready---');
+		};
+
+</script>
+	</body>
+</html>
+    
