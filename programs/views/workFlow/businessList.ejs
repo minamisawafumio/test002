@@ -18,7 +18,7 @@
   </head>
 	<body>
 		<h1>業務一覧</h1>
-		業務一覧
+		業務一覧XXXXX
 		<form id="form" method="POST" action="">
 			<div id="app">
 				{{out_data}}
@@ -27,8 +27,7 @@
 					<p id="id_list" ></p>
 				</div>
 
-				<p id="id_list1" ></p>
-				<p id="id_function" ></p>
+
 
 
 				<div>
@@ -48,6 +47,12 @@
 				<div>
 					<input id="id_back" type="button" name="test_002" value="戻る" onclick="btn_onclick('/main')"/>
 				</div>
+
+				<div id="id_list1" ></div>
+				<div id="id_function" ></div>
+
+
+
 			</div>
 		</form>
 <script>
@@ -93,7 +98,10 @@
 
 
 
-		setScriptToHTML('id_list1'		, w_buffSt1);
+		//setScriptToHTML('id_list1'		, w_buffSt1);
+
+		 $("#id_list1").replaceWith(w_buffSt1);
+//		 $("#id_function").replaceWith(w_buffSt2);
 		setScriptToHTML('id_function'	, w_buffSt2);
 
 

@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\public",
-    "\\public\\javascripts",
-    "\\public\\javascripts\\myjs",
+    "\\public\\source",
+    "\\public\\source\\0001",
     "\\views",
     "\\views\\calc",
     "\\views\\main",
@@ -11,6 +11,6 @@
     "\\views\\upload",
     "\\views\\workFlow"
   ],
-  "SelectedNode": "\\routes\\main.js",
-  "PreviewInSolutionExplorer": true
+  "SelectedNode": "\\public\\source\\0001\\function.txt",
+  "PreviewInSolutionExplorer": false
 }

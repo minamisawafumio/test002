@@ -8,11 +8,9 @@
 	function aaaaa(iSt){
 
 
-		let dateTime = new Date().getTime();
-		let dateSt = new Date(dateTime);
-
+		let dateSt = getSystemDate();
 		
-		vm1.out_data = formatDate(dateSt);;
+		vm1.out_data = formatDate(dateSt);
 	}
 
 </script>
