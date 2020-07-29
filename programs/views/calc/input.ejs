@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="UTF-8">
+		<title>計算</title>
+    
+		<script src="/javascripts/jquery.min.js"></script>
+		<script src="/javascripts/myjs/myNodeModule.js"></script>
+
+		<script src="/javascripts/jquery-ui-1.12.1/jquery-ui.js"></script>
+		<script src="/javascripts/jquery-ui-1.12.1/datepicker-ja.js"></script>
+		<link rel="stylesheet" href="/javascripts/jquery-ui-1.12.1/jquery-ui.css">
+    
+		<style>
+		.alert {
+		  color: #a94442;
+		  background-color: #f2dede;
+		  border-color: #ebccd1;
+		}
+		</style>
+</head>
+<body>
+    <h1>計算</h1>
+    あああああああPPPああああああ
+	<form id="form" method="POST" action="">
+			<div id="i_01">
+				<input type='text' name='i_01_01_data' id='i_01_01' disabled />
+			</div>
+			<div id="i_02">
+				<input type='text' name='i_02_01_data' id='i_02_01' />
+			</div>
+			<div id="i_03">
+				<input type='text' name='i_03_01_data' id='i_03_01' value="" disabled />
+			</div>
+			<div>
+				<input type="text" id="id_datepicker" placeholder="日付を選択してください">
+			</div>
+			<div>
+				<input id="calc_btn_01" type="button" name="test_001" value="実行"/>
+			</div>
+			<div>
+				<input id="calc_btn_02" type="button" name="test_002" value="実行" />
+			</div>
+			<div>
+				<input id="calc_btn_03" type="button" name="test_003" value="JSON実行" />
+			</div>
+
+
+			<div id="id_dialog2"  style="display:none;">
+				<p>このようなダイアログが表示されます！</p>
+			</div>
+			<div>
+				<input type="button" id="id_btn" value="ダイアログ表示">
+			</div>
+		  	<div>
+				<input id="btn-back" type="button" name="test_002" value="戻る" onclick="btn_onclick('/main')"/>
+			</div>
+			<div>
+				<label><input id="id_radio1" type="radio" name="kome" value="1">コシヒカリ</label>
+				<label><input id="id_radio2" type="radio" name="kome" value="2">ひとめぼれ</label>
+				<label><input id="id_radio3" type="radio" name="kome" value="3">あきたこまち</label>
+			</div>
+			<div>
+				<table border='1'>
+					<tr><td>
+						<input type="checkbox" name="city1" value="高崎">：高崎　　
+						<input type="checkbox" name="city1" value="前橋">：前橋　　
+						<input type="checkbox" name="city1" value="太田">：太田
+ 					</td></tr>
+					<!--結果出力用-->
+					<input type='text' name='i_city1_data' id='i_city1_01' disabled />
+				</table>
+			</div>
+			<div>id_aiu
+				<select id="id_aiu">
+					<option value="あああ">あああ</option>
+					<option value="いいい">いいい</option>
+					<option value="ううう">ううう</option>
+				</select>
+				<!--結果出力用-->
+				<input type='text' name='nm_aiu_data' id='i_aiu_01' disabled />
+			</div>
+	</form>
+	<script>
+
+	//ウインドウが開いた時に発動-------------------------------------------------------------------------------------
+ 	$(document).ready( function(){
+		document_onready();
+		
+		calc_init();
+	});
+		
+	// ドキュメント読み込み完了時に呼び出されます。
+	var document_onready = function (event) { //-------------------------------------------------------------------
+		$("#calc_btn_01")	.on("click", button_test01);
+		$("#calc_btn_02")	.on("click", button_test02);
+		$("#calc_btn_03")	.on("click", button_test03);
+		$("#id_btn")		.on("click", btnOnclick_dialog);
+		$("#id_aiu")		.on("change", btn_id_aiu);
+
+	};
+
+	// 「ダイアログ」ボタン押下時に呼び出されます。
+	var btnOnclick_dialog = function (event) { //---------------------------------------------------------------------
+		$("#id_dialog2").dialog({
+			modal:true, //モーダル表示
+			title:"テストダイアログ1", //タイトル
+			buttons: { //ボタン
+			"確認": function() {
+				$(this).dialog("close");
+				button_test02();
+				},
+			"キャンセル":
+				function() {
+					$(this).dialog("close"); 
+				}
+			}
+		});
+	};
+
+	//チェックボックスのクリック時発動--------------------------------------------------------------------------------
+	$('input[name="kome"]').change(function() {
+		var result = $(this).val();
+    
+		console.log('#####################', result );
+	});
+
+	//----------------------------------------------------------------------------------------------------------------
+	// チェックボックスをチェックしたら発動
+	$('input[name="city1"]').change(function() {
+ 
+		// ①空の配列を用意
+		let citys = [];
+ 
+		// ②チェックが入ったらループ処理
+		$('input[name="city1"]:checked').each(function() {
+		 	let result = $(this).val();
+			// ③value値を配列に格納
+			citys.push(result);
+		});
+ 
+
+		document.getElementById("i_city1_01").value =  citys;
+
+		button_test01();
+ 	});
+
+	//----------------------------------------------------------------------------------------------------------------
+	function button_test01(){
+
+		let data005 = getElemVal("i_02_01");
+
+		if(isNumber(data005)){
+			console.log('数値です',data005);
+		}else{
+			console.log('数値ではありません',data005);
+		}
+
+		let json = {
+			methodName	: 'rtn_test01',
+			doServerMethod: 'method_001',
+			data005		: data005,
+		}
+
+		postData("/calc/execute", json);
+	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	function rtn_test01(resData, textStatus, jqXHR){
+
+		let hexSt = resData.hexSt;
+
+		let	json = utf8_hex_string_to_json(hexSt);
+
+		console.log(getNowDate() + ' ++++++++ rtn_test01 json=', JSON.stringify(json));
+
+		document.getElementById("i_01_01").value = json.time;
+		document.getElementById("i_03_01").value = json.j05;
+	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	function button_test02(){
+
+		console.log('++++++++++++++++++++ button_test02 ','');
+
+		let data005 = getElemVal("i_02_01");
+
+		if(isNumber(data005)){
+			console.log('数値です',data005);
+		}else{
+			console.log('数値ではありません',data005);
+		}
+
+		let json = {
+			methodName	: 'rtn_test02',
+			doServerMethod: 'method_002',
+			data005		: data005,
+		}
+
+		postData("/calc/execute", json);
+	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	function rtn_test02(resData, textStatus, jqXHR){
+		
+		let hexSt = resData.hexSt;
+
+		let	json = utf8_hex_string_to_json(hexSt);
+	
+		document.getElementById("i_01_01").value = json.time;
+		document.getElementById("i_03_01").value = json.j05;
+
+	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	function button_test03(){
+
+		let json = {
+			methodName	: 'rtn_test03',
+			doServerMethod: 'method_003',
+			str1 : "",
+		}
+
+		postData("/calc/execute", json);
+	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	function rtn_test03(resData, textStatus, jqXHR){
+
+		let hexSt = resData.hexSt;
+
+		let	json = utf8_hex_string_to_json(hexSt);
+		
+		document.getElementById("i_01_01").value = json.time;
+		document.getElementById("i_03_01").value = json.j05;
+	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	function btn_id_aiu(){
+		let str1 = $("#id_aiu").val();
+
+		console.log('#################id_aiu=', str1 );
+
+		let json = {
+			methodName	: 'rtn_aiu',
+			doServerMethod: 'method_003',
+			str1			: str1,
+		}
+
+		postData("/calc/execute", json);
+	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	function rtn_aiu(resData, textStatus, jqXHR){
+
+		let hexSt = resData.hexSt;
+
+		let	json = utf8_hex_string_to_json(hexSt);
+
+		document.getElementById("i_aiu_01").value = json.aiu_01;
+	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	function calc_init(){
+		console.log(' ++++++++++++++++ calc_init =', '******************');
+
+		let json = {
+			methodName		: 'rtn_init',
+			doServerMethod	: 'calc_init'
+		}
+
+		postData("/calc/execute", json);
+	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	function rtn_init(resData, textStatus, jqXHR){
+
+		let hexSt = resData.hexSt;
+
+		let	json = utf8_hex_string_to_json(hexSt);
+		
+		console.log(' ++++++++++++++++ rtn_init  json = ', JSON.stringify(json));
+
+
+		document.getElementById("i_01_01").value = json.time;
+		document.getElementById("i_03_01").value = json.j05;
+	}
+
+	</script>
+</body>
+</html>
+    

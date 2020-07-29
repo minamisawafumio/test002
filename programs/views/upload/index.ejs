@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>search</title>
+    
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/myjs/myNodeModule.js"></script>
+
+  </head>
+  <body>
+    <h1>検索</h1>
+
+    <div>
+		<p id="id_msg001" ></p>
+	</div>
+
+
+	<form id="form" method="POST" action="/upload/upload01" enctype="multipart/form-data">
+		<div>
+			<input id="id_upload" type="file" name="nm_upload" value="ファイルアップロード" />
+			<input type="submit" value="upload" />
+		</div>
+
+		<div>
+			<input id="id_back" type="button" name="test_002" value="戻る" />
+		</div>
+
+
+	</form>
+
+
+
+
+	<script>
+    //ウインドウが開いた時に発動-------------------------------------------------------------------------------------
+ 	$(document).ready( function(){
+			document_onready();
+
+	});
+		
+	// ドキュメント読み込み完了時に呼び出されます。
+	var document_onready = function (event) { //-------------------------------------
+		$("#id_back").on("click", btnOnclick_back);
+	};
+
+	// 「戻る」ボタン押下時に呼び出されます。
+	var btnOnclick_back = function (event) { //-------------------------------------
+		var $form = $("#form");
+		$form.attr("action", "/main");
+		$form.submit();
+	};
+
+
+
+	</script>
+  </body>
+</html>

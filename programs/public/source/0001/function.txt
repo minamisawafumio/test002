@@ -1,0 +1,18 @@
+<script>
+
+
+	function func001(){
+		aaaaa("aaaassssdddd");
+	}
+
+	function aaaaa(iSt){
+
+
+		let dateTime = new Date().getTime();
+		let dateSt = new Date(dateTime);
+
+		
+		vm1.out_data = formatDate(dateSt);;
+	}
+
+</script>

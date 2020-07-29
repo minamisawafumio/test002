@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>確認</title>
+
+	<script src="/javascripts/jquery.min.js"></script>
+	<script src="/javascripts/vue-2.6.11/vue.js"></script>
+	<script src="/javascripts/myjs/myNodeModule.js"></script>
+
+    <style>
+      input[readonly] {
+        background-color: #eee;
+        color: #555;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>確認</h1>
+	<div>
+		<output type="text" id="id_msg" name="msg" value="" />
+	</div>
+    <form id="form" method="POST" action="">
+   		<div id="id_app">
+
+			<h1>{{ message }}</h1>
+
+			<div>
+				<label for="corpName">会社名：</label>
+				<input v-model='corpName' name='corpName' v-bind:readonly="isReadonly">
+			</div>
+			<div>
+				<label for="location">所在地：</label>
+				<input v-model='location' name='location' v-bind:readonly="isReadonly">
+			</div>
+			<div>
+				<label for="tel">電話：</label>
+				<input v-model='tel' name='tel' v-bind:readonly="isReadonly">
+			</div>
+			<div>
+				<label for="yymmdd">年月日：</label>
+				<input name='yymmdd' v-model='yymmdd' v-bind:readonly="isReadonly">
+			</div>
+		</div>
+		<div>
+			<label for="date">選択：</label>
+			<input type="text" id="id_info" name="nm_info" value="" readonly />
+		</div>
+		<div>
+			<input type="submit" id="btn-regist" value="登録" onclick="btn_onclick('/regist/complete')"/>
+		</div>
+		<div>
+			<input type="submit" id="btn-regist" value="登録2" onclick="btn_onclick('/regist/complete2')"/>
+		</div>
+		<div>
+			<input type="button" id="btn-back" value="変更" onclick="change()"/>
+		</div>
+		<div>
+			<input type="button" id="btn-back" value="戻る" onclick="back()"/>
+		</div>
+    </form>
+
+    <script>
+		let hexSt = "<%= hexSt %>";
+		let json = utf8_hex_string_to_json(hexSt);
+
+    	let vm1 = new Vue({
+			el	: '#id_app',
+			data: {
+				message		: json.message,
+				corpName	: json.corpName ,
+				location	: json.location ,
+				tel			: json.tel ,
+				yymmdd		: json.yymmdd ,
+				isReadonly	: true,
+			},
+		})
+
+		//ウインドウが開いた時に発動-------------------------------------------------------------------------------------
+     	$(document).ready( function(){
+
+		});
+   		
+   		//２重submitを防止します
+		(function () {
+			"use strict"
+
+			let onsubmit = function (event) {
+				$("form").off("submit", onsubmit).on("submit", false);
+			};
+
+			$("form").on("submit", onsubmit);
+		})();
+        
+		//-------------------------------------------------------------------------------------------------------------
+		function complete() {
+			btn_onclick('/regist/complete');
+		}
+
+		//-------------------------------------------------------------------------------------------------------------
+		function change() {
+			vm1.isReadonly = false;
+		}
+
+		//-------------------------------------------------------------------------------------------------------------
+		function back() {
+			btn_onclick('/regist/input');
+		}
+
+    </script>
+  </body>
+</html>

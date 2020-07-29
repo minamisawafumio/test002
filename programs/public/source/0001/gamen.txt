@@ -1,0 +1,3 @@
+<div>
+	<input id="main_btn_calc" type="button" name="test_regist" value="実行します" onclick="func001()"/>
+</div>
