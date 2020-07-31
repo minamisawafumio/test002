@@ -1,260 +1,225 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>search</title>
-    
-    <script src="/javascripts/jquery.min.js"></script>
-	<script src="/javascripts/vue-2.6.11/vue.js"></script>
-    <script src="/javascripts/myjs/myNodeModule.js"></script>
 
-  </head>
-  <body>
-    <h1>検索</h1>
+<head>
+  <meta charset="UTF-8">
+  <title>search</title>
+  
+  <link rel="stylesheet" href="/stylesheets/myMain.css" />
 
-    <div>
-		<p id="id_msg001" ></p>
-	</div>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/vue-2.6.11/vue.js"></script>
+  <script src="/javascripts/myjs/myNodeModule.js"></script>
 
-	<form id="form" method="POST" action="" enctype="" >
-		<div id="app">
-			<div>
-				<li v-for="item in items" :key="item.message">
-					{{ item.message }}
-				</li>
-			</div>
+</head>
 
-			{{out_message}}
+<body>
+  <h1>検索</h1>
 
-			<div>
-				<label for="corpName">会社名：</label>
-				<input type="text" id="id_corpName" name="nm_corpName" value=""/>
-			</div>
-			<div>
-				<label for="location">所在地：</label>
-				<input v-model='location' id="id_location" name='location' >
-			</div>
-			<div>
-				<label for="tel">電話：</label>
-				<input v-model='tel' id="id_tel" name='tel' >
-			</div>
-			<div>
-				<label for="date">年月日：</label>
-				<input v-model='yymmdd' id="id_yymmdd" name='yymmdd' >
-			</div>
+  <div>
+    <p id="id_msg001"></p>
+  </div>
 
-			<div>
-				<input id="id_btn_01" type="button" name="nm_btn_01" value="検索 postgreSQL" onclick="button_test01()"/>
-			</div>
-			<div>
-				<input id="id_btn_mongoDB" type="button" name="nm_btn_mongoDB" value="検索 mongoDB" onclick="button_test01M()"/>
-			</div>
-			<div>
-				<input id="id_btn_updateM" type="button" name="nm_btn_updateM" value="更新 mongoDB" onclick="button_updateM()"/>
-			</div>
-			<div>
-				<input id="id_btn_deleteM" type="button" name="nm_btn_deleteM" value="削除 mongoDB" onclick="button_deleteM()"/>
-			</div>
-			<div>
-				<input id="id_pdf01" type="button" name="nm_pdf01" value="PDF" onclick="btn_onclick('/search/pdf01')"/>
-			</div>
-			<div>
-				<input id="id_btn_02" type="button" name="nm_btn_02" value="０２ボタン" onclick="button_test02()"/>
-			</div>
-			<div>
-				<input id="id_btn_getJsonFifo" type="button" name="nm_btn_getJsonFifo" value="JSONデータ取得" onclick="button_getJsonFifo()"/>
-			</div>
-	  		<div>
-				<input id="id_back" type="button" name="test_002" value="戻る" onclick="btn_onclick('/main')"/>
-			</div>
-	  		<div>
-				<ul id="v-for-object" class="c_demo">
-					<li v-for="(value, name, index) in objectMinami">
-						{{ index }} {{ name }} {{ value }}
-					</li>
-				</ul>
-			</div>
+  <form id="form" method="POST" action="" enctype="">
+    <div id="app">
+      <div>
+        <li v-for="item in items" :key="item.message">
+          {{ item.message }}
+        </li>
+      </div>
 
-	  		<div>
-				<li v-for="n in evenNumbersMinami">{{ n }}</li>
-			</div>
+      {{out_message}}
 
-			{{fullName}}
-
-		</div>
-
-	</form>
+      <div>
+        <label for="corpName">会社名：</label>
+        <input type="text" id="id_corpName" name="nm_corpName" value="" />
+      </div>
+      <div>
+        <label for="location">所在地：</label>
+        <input v-model='location' id="id_location" name='location'>
+      </div>
+      <div>
+        <label for="tel">電話：</label>
+        <input v-model='tel' id="id_tel" name='tel'>
+      </div>
+      <div>
+        <label for="date">年月日：</label>
+        <input v-model='yymmdd' id="id_yymmdd" name='yymmdd'>
+      </div>
 
 
-		<script>
+      <div>
+        <input id="id_btn_01" type="button" name="nm_btn_01" value="検索 postgreSQL" onclick="button_test01()" />
+      </div>
+      <div>
+        <input id="id_btn_mongoDB" type="button" name="nm_btn_mongoDB" value="検索 mongoDB" onclick="button_test01M()" />
+      </div>
+      <div>
+        <input id="id_btn_updateM" type="button" name="nm_btn_updateM" value="更新 mongoDB" onclick="button_updateM()" />
+      </div>
+      <div>
+        <input id="id_btn_deleteM" type="button" name="nm_btn_deleteM" value="削除 mongoDB" onclick="button_deleteM()" />
+      </div>
+      <div>
+        <input id="id_pdf01" type="button" name="nm_pdf01" value="PDF" onclick="btn_onclick('/search/pdf01')" />
+      </div>
+      <div>
+        <input id="id_btn_02" type="button" name="nm_btn_02" value="０２ボタン" onclick="button_test02()" />
+      </div>
+      <div>
+        <input id="id_btn_getJsonFifo" type="button" name="nm_btn_getJsonFifo" value="JSONデータ取得" onclick="button_getJsonFifo()" />
+      </div>
+      <div>
+        <input id="id_back" type="button" name="test_002" value="戻る" onclick="btn_onclick('/main')" />
+      </div>
+      <div>
+        <ul id="v-for-object" class="c_demo">
+          <li v-for="(value, name, index) in objectMinami">
+            {{ index }} {{ name }} {{ value }}
+          </li>
+        </ul>
+      </div>
 
+      <div>
+        <li v-for="n in evenNumbersMinami">{{ n }}</li>
+      </div>
 
+      {{fullName}}
 
-			const vm1 = new Vue({
-				el	: '#app',
-				data: {
-					corpName		: '',
-					location	: '',
-					tel			: '',
-					yymmdd		: '',
-					out_message	: '',
-					items		: [],
-					objectMinami: {},
-					numbers		: [ 1, 2, 3, 4, 5 ],
-					firstName	: '南沢',
-					lastName	: '郁男',
-				},
-				computed: {
-					evenNumbersMinami: function () {
-						return this.numbers.filter(function (number) {
-							return number % 2 === 0
-						})
-					},
-					fullName: function () {
-						return this.firstName + ' ' + this.lastName
-					}
-				}
-			});
+    </div>
 
+  </form>
 
-			//ウインドウが開いた時に発動-------------------------------------------------------------------------------------
-			$(document).ready( function(){
+  <script>
+    const vm1 = new Vue({
+      el: '#app',
+      data: {
+        corpName: '',
+        location: '',
+        tel: '',
+        yymmdd: '',
+        out_message: '',
+        items: [],
+        objectMinami: {},
+        numbers: [1, 2, 3, 4, 5],
+        firstName: '南沢',
+        lastName: '郁男',
+      },
+      computed: {
+        evenNumbersMinami: function() {
+          return this.numbers.filter(function(number) {
+            return number % 2 === 0
+          })
+        },
+        fullName: function() {
+          return this.firstName + ' ' + this.lastName
+        }
+      }
+    });
+    //ウインドウが開いた時に発動-------------------------------------------------------------------------------------
+    $(document).ready(function() {});
+    //----------------------------------------------------------------------------------------------------------------
+    function button_test01() {
+      let json = {
+        methodName: 'rtn_test01',
+        doServerMethod: 'method_001',
+        corpName: getElemVal("id_corpName")
+      }
+      postData("/search/execute01", json);
+    }
+    //----------------------------------------------------------------------------------------------------------------
+    function button_test01M() {
+      let json = {
+        methodName: 'rtn_test01',
+        doServerMethod: 'method_001M',
+        corpName: getElemVal("id_corpName"),
+      }
+      postData("/search/execute01", json);
+    }
+    //----------------------------------------------------------------------------------------------------------------
+    function button_updateM() {
+      let json = {
+        methodName: 'rtn_test01',
+        doServerMethod: 'method_updateM',
+        corpName: getElemVal("id_corpName"),
+        location: getElemVal("id_location"),
+        tel: getElemVal("id_tel"),
+        yymmdd: getElemVal("id_yymmdd"),
+      }
+      postData("/search/execute01", json);
+    }
+    //----------------------------------------------------------------------------------------------------------------
+    function button_deleteM() {
+      let json = {
+        methodName: 'rtn_test01',
+        doServerMethod: 'method_deleteM',
+        corpName: getElemVal("id_corpName"),
+      }
+      postData("/search/execute01", json);
+    }
+    //----------------------------------------------------------------------------------------------------------------
+    function rtn_test01(resData, textStatus, jqXHR) {
+      let text_data = resData.hexSt;
+      let json = utf8_hex_string_to_json(text_data);
+      let j1Json = {
+        title: 'How to do lists in Vue',
+        author: 'Jane Doe',
+        publishedAt: '2016-04-10',
+      }
+      let allayJson = {
+        al01: [{
+            message: '111'
+          },
+          {
+            message: '222'
+          },
+          {
+            message: '333'
+          },
+          {
+            message: '444'
+          },
+          {
+            message: '555'
+          },
+        ],
+      }
+      vm1.corpName = json.corpName;
+      vm1.location = json.location;
+      vm1.tel = json.tel;
+      vm1.yymmdd = json.yymmdd;
+      vm1.out_message = json.out_message;
+      vm1.items = allayJson.al01;
+      vm1.objectMinami = j1Json;
+      let wLastName = "太郎";
+      if (json.location != undefined) {
+        wLastName = json.location;
+      }
+      vm1.lastName = wLastName;
+    }
+    //----------------------------------------------------------------------------------------------------------------
+    function button_test02() {
+      let json = {
+        methodName: 'rtn_test02',
+        doServerMethod: 'method_002'
+      }
+      postData("/search/execute01", json);
+    }
+    //----------------------------------------------------------------------------------------------------------------
+    function rtn_test02(resData, textStatus, jqXHR) {
+      let jMap = utf8_hex_string_to_json(resData.hexSt);
+      console.log('button_aaa01#userName=', jMap.userName);
+      document.getElementById("i_01_01").value = jMap.time;
+      document.getElementById("i_03_01").value = jMap.j05;
+    }
+    //----------------------------------------------------------------------------------------------------------
+    function button_getJsonFifo() {
+      let json3 = get_utf8_hex_string_to_json('abcde');
+      let json3AA = JSON.stringify(json3);
+      console.log('@@@7777 //////****** button_getJsonFifo json3AA=', json3AA);
+    }
+  </script>
 
-			});
-		
-			//----------------------------------------------------------------------------------------------------------------
-			function button_test01(){
+</body>
 
-				let json = {
-					methodName	: 'rtn_test01',
-					doServerMethod: 'method_001',
-					corpName		: getElemVal("id_corpName")
-				}
-
-				postData("/search/execute01", json);
-			}
-
-			//----------------------------------------------------------------------------------------------------------------
-			function button_test01M(){
-
-				let json = {
-				methodName	: 'rtn_test01',
-				doServerMethod: 'method_001M',
-				corpName		: getElemVal("id_corpName"),
-			}
-
-				postData("/search/execute01", json);
-			}
-
-			//----------------------------------------------------------------------------------------------------------------
-			function button_updateM(){
-
-				let json = {
-					methodName		: 'rtn_test01',
-					doServerMethod	: 'method_updateM',
-					corpName		: getElemVal("id_corpName"),
-					location		: getElemVal("id_location"),
-					tel				: getElemVal("id_tel"),
-					yymmdd			: getElemVal("id_yymmdd"),
-				}
-
-				postData("/search/execute01", json);
-			}
-
-			//----------------------------------------------------------------------------------------------------------------
-			function button_deleteM(){
-
-				let json = {
-					methodName		: 'rtn_test01',
-					doServerMethod	: 'method_deleteM',
-					corpName		: getElemVal("id_corpName"),
-				}
-
-				postData("/search/execute01", json);
-			}
-
-			//----------------------------------------------------------------------------------------------------------------
-			function rtn_test01(resData, textStatus, jqXHR){
-
-				let text_data = resData.hexSt;
-				let json = utf8_hex_string_to_json(text_data);
-
-				let j1Json =  {
-									title		: 'How to do lists in Vue',
-									author		: 'Jane Doe',
-									publishedAt	: '2016-04-10',
-								}
-
-				let allayJson = {
-						al01 :  [
-						  { message: '111' },
-						  { message: '222' },
-						  { message: '333' },
-						  { message: '444' },
-						  { message: '555' },
-						],
-				}
-
-				vm1.corpName	= json.corpName;
-				vm1.location	= json.location;
-				vm1.tel			= json.tel;
-				vm1.yymmdd		= json.yymmdd;
-				vm1.out_message	= json.out_message;
-				vm1.items		= allayJson.al01;
-				vm1.objectMinami= j1Json;
-
-
-				let wLastName = "太郎";
-				if(json.location != undefined){
-					wLastName = json.location;
-				}
-				vm1.lastName = wLastName;
-
-
-
-
-			}
-
-			//----------------------------------------------------------------------------------------------------------------
-			function button_test02(){
-
-				let json = {
-					methodName	: 'rtn_test02',
-					doServerMethod: 'method_002'
-				}
-
-				postData("/search/execute01", json);
-			}
-
-			//----------------------------------------------------------------------------------------------------------------
-			function rtn_test02(resData, textStatus, jqXHR){
-
-				let jMap = utf8_hex_string_to_json(resData.hexSt);
-		
-				console.log('button_aaa01#userName=' , jMap.userName);
-		
-				document.getElementById("i_01_01").value = jMap.time;
-				document.getElementById("i_03_01").value = jMap.j05;
-			}
-
-			//----------------------------------------------------------------------------------------------------------
-			function button_getJsonFifo(){
-				let json3 = get_utf8_hex_string_to_json('abcde');
-				let json3AA = JSON.stringify(json3);
-				console.log('@@@7777 //////****** button_getJsonFifo json3AA=', json3AA);
-			}
-
-
-
-
-
-
-
-
-
-
-
-		</script>
-
-	</body>
 </html>

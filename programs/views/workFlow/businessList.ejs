@@ -1,120 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>業務一覧</title>
-    
-    <script src="/javascripts/jquery.min.js"></script>
-		<script src="/javascripts/vue-2.6.11/vue.js"></script>
-    <script src="/javascripts/myjs/myNodeModule.js"></script>
-    
-    <style>
-    .alert {
-      color: #a94442;
-      background-color: #f2dede;
-      border-color: #ebccd1;
+
+<head>
+  <meta charset="UTF-8">
+  <title>業務一覧</title>
+
+  <link rel="stylesheet" href="/stylesheets/myMain.css" />
+
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/vue-2.6.11/vue.js"></script>
+  <script src="/javascripts/myjs/myNodeModule.js"></script>
+
+</head>
+
+<body>
+  <h1>業務一覧</h1>
+  業務一覧XXXXX
+  <form id="form" method="POST" action="">
+    <div id="app">
+      {{out_data}}
+
+      <div>
+        <p id="id_list"></p>
+      </div>
+
+      <div>
+        <input id="main_btn_calc" type="button" name="test_regist" value="計算3" onclick="btn_onclick('/main/calc')" />
+      </div>
+      <div>
+        <input id="main_btn_search" type="button" name="test_search" value="検索" onclick="btn_onclick('/main/searchStart')" />
+      </div>
+      <div>
+        <input id="main_btn_regist" type="button" name="test_regist" value="登録" onclick="btn_onclick('/main/start')" />
+      </div>
+
+      <div>
+        <input id="main_btn_upload" type="button" name="test_upload" value="アップロード" onclick="btn_onclick('/main/upload')" />
+      </div>
+
+      <div>
+        <input id="id_back" type="button" name="test_002" value="戻る" onclick="btn_onclick('/main')" />
+      </div>
+
+      <div id="id_list1"></div>
+      <div id="id_function"></div>
+
+    </div>
+  </form>
+  <script>
+    const vm1 = new Vue({
+      el: '#app',
+      data: {
+        out_data: 'ああああ',
+      }
+    });
+    //ウインドウが開いた時に発動-------------------------------------------------------------------------------------
+    $(document).ready(function() {
+      do_init();
+    });
+    //----------------------------------------------------------------------------------------------------------------
+    function do_init() {
+      let rtnHex = "<%= hexSt %>";
+      let rtnJson = utf8_hex_string_to_json(rtnHex);
+      console.log('rtnJson=', JSON.stringify(rtnJson));
+      let businessListSt = utf8_hex_string_to_string(rtnJson.j_businessList);
+      console.log('businessListSt=', businessListSt);
+      let elem = document.getElementById('id_list');
+      let elem0 = document.getElementById('id_list0');
+      let elem1 = document.getElementById('id_list1');
+      elem.innerHTML = businessListSt;
+      let w_buffSt1 = utf8_hex_string_to_string(rtnJson.j_buffSt1);
+      let w_buffSt2 = utf8_hex_string_to_string(rtnJson.j_buffSt2);
+      //setScriptToHTML('id_list1'		, w_buffSt1);
+      $("#id_list1").replaceWith(w_buffSt1);
+      //		 $("#id_function").replaceWith(w_buffSt2);
+      setScriptToHTML('id_function', w_buffSt2);
+      aaaaa(rtnJson.j_data);
     }
-    </style>
-  </head>
-	<body>
-		<h1>業務一覧</h1>
-		業務一覧XXXXX
-		<form id="form" method="POST" action="">
-			<div id="app">
-				{{out_data}}
+  </script>
+</body>
 
-				<div>
-					<p id="id_list" ></p>
-				</div>
-
-
-
-
-				<div>
-					<input id="main_btn_calc" type="button" name="test_regist" value="計算3" onclick="btn_onclick('/main/calc')"/>
-				</div>
-				<div>
-					<input id="main_btn_search" type="button" name="test_search" value="検索" onclick="btn_onclick('/main/searchStart')" />
-				</div>
-				<div>
-					<input id="main_btn_regist" type="button" name="test_regist" value="登録" onclick="btn_onclick('/main/start')"/>
-				</div>
-
-				<div>
-					<input id="main_btn_upload" type="button" name="test_upload" value="アップロード" onclick="btn_onclick('/main/upload')"/>
-				</div>
-
-				<div>
-					<input id="id_back" type="button" name="test_002" value="戻る" onclick="btn_onclick('/main')"/>
-				</div>
-
-				<div id="id_list1" ></div>
-				<div id="id_function" ></div>
-
-
-
-			</div>
-		</form>
-<script>
-
-			const vm1 = new Vue({
-				el	: '#app',
-				data: {
-					out_data: 'ああああ',
-				}
-			});
-
-
-
-
-
-	//ウインドウが開いた時に発動-------------------------------------------------------------------------------------
-    $(document).ready( function(){
-		do_init();
-	});
-
-	//----------------------------------------------------------------------------------------------------------------
-	function do_init(){
-
-		let rtnHex = "<%= hexSt %>";
-
-		let rtnJson = utf8_hex_string_to_json(rtnHex);
-		console.log('rtnJson=', JSON.stringify(rtnJson));
-
-
-		let businessListSt = utf8_hex_string_to_string(rtnJson.j_businessList);
-
-		console.log('businessListSt=',businessListSt);
-
-
-		let elem = document.getElementById('id_list');
-		let elem0 = document.getElementById('id_list0');
-		let elem1 = document.getElementById('id_list1');
-		
-		elem.innerHTML = businessListSt;
-
-		let w_buffSt1 = utf8_hex_string_to_string(rtnJson.j_buffSt1);
-		let w_buffSt2 = utf8_hex_string_to_string(rtnJson.j_buffSt2);
-
-
-
-		//setScriptToHTML('id_list1'		, w_buffSt1);
-
-		 $("#id_list1").replaceWith(w_buffSt1);
-//		 $("#id_function").replaceWith(w_buffSt2);
-		setScriptToHTML('id_function'	, w_buffSt2);
-
-
-		aaaaa(rtnJson.j_data);
-
-	}
-
-
-
-
-
-
-</script>
-	</body>
 </html>
-    
