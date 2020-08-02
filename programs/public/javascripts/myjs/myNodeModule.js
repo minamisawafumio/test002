@@ -416,7 +416,7 @@ getElem = function (id) {
 }
 
 // 日付をYYYYMMDDHHMISSMSの書式(17桁)で返すメソッド
-formatDate = function (dt) {
+function formatDate(dt) {
     var y  = dt.getFullYear();
     var m  = ('00' + (dt.getMonth() + 1)).slice(-2);
     var d  = ('00' + dt.getDate()).slice(-2);
@@ -425,11 +425,4 @@ formatDate = function (dt) {
     var s =  ('00' + dt.getSeconds()).slice(-2);
     var ms = ('000' + dt.getMilliseconds()).slice(-3);
     return (y + m + d + h + mi + s + ms);
-}
-
-//システム日付(17桁)を取得する------...-----------------------------------------------------------------
-getSystemDate = function () {
-    let dateTime = new Date().getTime();
-    let dateSt = new Date(dateTime);
-    return formatDate(dateSt);
 }

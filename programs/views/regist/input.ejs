@@ -1,80 +1,81 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8">
+    <title>登録</title>
 
-<head>
-  <meta charset="UTF-8">
-  <title>登録</title>
+	<link rel="stylesheet" href="/stylesheets/myMain.css" />
+	<link rel="stylesheet" href="/javascripts/jquery-ui-1.12.1/jquery-ui.css"> 
+
+	<script src="/javascripts/jquery.min.js"></script>
+
+	<script src="/javascripts/jquery-ui-1.12.1/jquery-ui.js"></script>
+	<script src="/javascripts/jquery-ui-1.12.1/datepicker-ja.js"></script>
+	<script src="/javascripts/vue-2.6.11/vue.js"></script>
+
+	<script src="/javascripts/myjs/myNodeModule.js"></script>
+
+  </head>
+  <body>
+    <h1>登録</h1>
+
+	<div>
+		<p id="id_msg001" ></p>
+	</div>
+
+	<form id="form" method="POST" action="">
+
+		<div id="id_app">
+			<h1>{{ message }}</h1>
+			<input v-model='message'>
+
+			<li v-for="(eErray,index) in err_array" class="list-group-item">
+			  {{ index+1 + '. ' + eErray }}  
+			</li>
+
+			<div>
+				<label for="corpName">会社名：</label>
+				<input v-model='corpName' name='corpName' >
+			</div>
+			<div>
+				<label for="location">所在地：</label>
+				<input v-model='location' name='location' >
+			</div>
+			<div>
+				<label for="tel">電話：</label>
+				<input v-model='tel' name='tel' >
+			</div>
+			<div>
+				<label for="date">年月日：</label>
+				<input v-model='yymmdd' name='yymmdd' >
+			</div>
+		</div>
+
+		<button v-bind:disabled="isButtonDisabled" v-bind: onclick="btn_onclick('/regist/confirm')" >確認</button>
+
+ 		<button v-bind:disabled="isButtonDisabled" v-bind: onclick="btn_onclick('/main')" >戻る</button>
 
 
-  <link rel="stylesheet" href="/stylesheets/myMain.css" />
-  <link rel="stylesheet" href="/javascripts/jquery-ui-1.12.1/jquery-ui.css">
+    </form>
 
-  <script src="/javascripts/jquery.min.js"></script>
+	<script>
 
-  <script src="/javascripts/jquery-ui-1.12.1/jquery-ui.js"></script>
-  <script src="/javascripts/jquery-ui-1.12.1/datepicker-ja.js"></script>
-  <script src="/javascripts/vue-2.6.11/vue.js"></script>
+		let hexSt = "<%= hexSt %>";
+		let json = utf8_hex_string_to_json(hexSt);
 
-  <script src="/javascripts/myjs/myNodeModule.js"></script>
+		new Vue({
+			el	: '#id_app',
+			data: {
+				message		: 'Hello Vue.js!',
+				err_array	: json.errors ,
+				corpName		: json.corpName ,
+				location	: json.location ,
+				tel			: json.tel ,
+				yymmdd		: json.yymmdd ,
+			}
+		})
 
-</head>
 
-<body>
-  <h1>登録</h1>
-
-  <div>
-    <p id="id_msg001"></p>
-  </div>
-
-  <form id="form" method="POST" action="">
-
-    <div id="id_app">
-      <h1>{{ message }}</h1>
-      <input v-model='message'>
-
-      <li v-for="(eErray,index) in err_array" class="list-group-item">
-        {{ index+1 + '. ' + eErray }}
-      </li>
-
-      <div>
-        <label for="corpName">会社名：</label>
-        <input v-model='corpName' name='corpName'>
-      </div>
-      <div>
-        <label for="location">所在地：</label>
-        <input v-model='location' name='location'>
-      </div>
-      <div>
-        <label for="tel">電話：</label>
-        <input v-model='tel' name='tel'>
-      </div>
-      <div>
-        <label for="date">年月日：</label>
-        <input v-model='yymmdd' name='yymmdd'>
-      </div>
-    </div>
-
-    <button v-bind:disabled="isButtonDisabled" v-bind: onclick="btn_onclick('/regist/confirm')">確認</button>
-
-    <button v-bind:disabled="isButtonDisabled" v-bind: onclick="btn_onclick('/main')">戻る</button>
-
-  </form>
-
-  <script>
-    let hexSt = "<%= hexSt %>";
-    let json = utf8_hex_string_to_json(hexSt);
-    new Vue({
-      el: '#id_app',
-      data: {
-        message: 'Hello Vue.js!',
-        err_array: json.errors,
-        corpName: json.corpName,
-        location: json.location,
-        tel: json.tel,
-        yymmdd: json.yymmdd,
-      }
-    })
-  </script>
-</body>
-
+	</script>
+	</body>
 </html>

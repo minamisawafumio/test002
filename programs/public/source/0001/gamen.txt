@@ -1,3 +1,25 @@
 <div>
-	<input id="main_btn_calc" type="button" name="test_regist" value="FFFFF実行します" onclick="func001()"/>
+	<input id="main_btn_calc" type="button" name="test_regist" value="実行します" onclick="func001()"/>
+</div>
+
+
+<div>
+	<label for="corpName">入力02：</label>
+	<input type="text" id="id_inputName02" name="nm_inputName02" value=""/>
+</div>
+
+
+<div>
+	<input id="main_btn_calc" type="button" name="test_regist" value="実行func002()" onclick="func002()"/>
+</div>
+
+<div>
+	<label for="corpName">入力03：</label>
+	<input type="text" id="id_inputName03" name="nm_inputName03" value=""/>
+</div>
+
+
+
+<div>
+	<input id="main_btn_calc" type="button" name="test_regist" value="実行func003()" onclick="func003()"/>
 </div>

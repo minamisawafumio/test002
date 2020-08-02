@@ -7,26 +7,6 @@ let tokens = new Tokens();
 let Promise = require('promise');
 
 require('../public/javascripts/myjs/myNodeModule.js');
-//--- postgreSQL接続 --------------------------------------
-const { getPostgresClient } = require('../public/javascripts/myjs/postgres.js');
-
-//--- mongodb 設定 --------------------------------------
-let co = require('co');
-let assert = require('assert');
-
-const MongoClient = require('mongodb').MongoClient;
-
-// 接続先URL
-const url = 'mongodb://localhost:27017';
-
-// データベース名
-const dbName = 'db0003';
-
-//MongoClient用オプション設定
-const connectOption = {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-}
 
 /**
  * リクエストボディーからデータを抽出-----------------------------------------------------
@@ -173,7 +153,7 @@ router.post("/complete2", function (req, res) {
 		]
 	}
 
-	let p1 = mongo_insert(json2);
+	let p1 = insert(json2);
 
 	Promise.all([p1]).then(() => {
 
@@ -229,52 +209,5 @@ router.post('/', function(req, res, next) {
         methodName	: w_clientMethodName
     });
 });
-
-//データ登録（postgreSQL）----------------------------------------------------------------------------------------
-async function postgreSQL_insert(iJson) {
-
-	let w_hex = json_to_utf8_hex_string(iJson);
-
-	const db = await getPostgresClient();
-
-	try {
-		const sql = "INSERT INTO t_0000 (key1, key2, key3, value) VALUES ('nodeJs', '1','" + iJson.corpName + "','" + w_hex + "')";
-
-		console.log('** postgreSQL_insert sql=', sql);
-
-		await db.begin();
-
-		await db.execute(sql);
-		await db.commit();
-	} catch (e) {
-		await db.rollback();
-		throw new Error('ERROR!!!');
-	} finally {
-		await db.release();
-	}
-}
-
-//----------------------------------------------------------------------------------------
-async function mongo_insert(json) {
-
-	let client = await MongoClient.connect(url, { useNewUrlParser: true })
-		.catch(err => { console.log(err); });
-
-	try {
-		/** DBを取得 */
-		let db = client.db(dbName);
-
-		let collection = db.collection('documents');
-
-		let result = await collection.insertMany(json.data);
-
-		json.result = result;
-
-	} catch (err) {
-		console.log(err);
-	} finally {
-		client.close();
-	}
-}
 
 module.exports = router;

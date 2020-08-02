@@ -1,16 +1,55 @@
 <script>
+	const jjjjj = {
+		y01(inData){
+			  console.log('inData=', inData);
+		},
+		y02(inData){
+			  console.log('inData222=', inData);
+		}
+
+	};
 
 
+	//-------------------------------------
 	function func001(){
+		jjjjj.y01('******@@@@@@@@**************');
+		jjjjj.y02('******@@@@@@@@**************');
+		
 		aaaaa("aaaassssdddd");
 	}
-
+	//-------------------------------------
 	function aaaaa(iSt){
 
 
-		let dateSt = getSystemDate();
+		let dateTime = new Date().getTime();
+		let dateSt = new Date(dateTime);
+
 		
-		vm1.out_data = formatDate(dateSt);
+		vm1.out_data = formatDate(dateSt) + iSt;
 	}
+	//-------------------------------------
+	function func002(iSt){
+
+
+		let dateTime = new Date().getTime();
+		let dateSt = new Date(dateTime);
+		let data01 = getElemVal("id_inputName02");
+
+		
+		vm1.out_data = formatDate(dateSt) + iSt + 'func002' + data01;
+	}
+	//-------------------------------------
+	function func003(iSt){
+
+
+		let dateTime = new Date().getTime();
+		let dateSt = new Date(dateTime);
+		let data01 = getElemVal("id_inputName03");
+		
+		vm1.out_data = formatDate(dateSt) + iSt + 'func003' + data01;
+	}
+
+
+
 
 </script>

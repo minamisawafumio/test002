@@ -7,18 +7,8 @@ let router = express.Router();
 let Promise = require('promise');
 
 require('../public/javascripts/myjs/myNodeModule.js');
-
-//--- postgreSQL接続 -----------------------------------------
-const { getPostgresClient } = require('../public/javascripts/myjs/postgres.js');
-
-//--- mongodb 設定 --------------------------------------
-const MongoClient = require('mongodb').MongoClient;
-
-// 接続先URL
-const url = 'mongodb://localhost:27017';
-
-// データベース名
-const dbName = 'db0003';
+require('../public/javascripts/myjs/mongoDbModule.js');
+require('../public/javascripts/myjs/postgreSqlModule.js');
 
 //MongoClient用オプション設定
 const connectOption = {
@@ -95,13 +85,9 @@ function method_001M(req, res) {
 		corpName: json.corpName
 	}
 
-	let p1 = corp_searchM(keyJson);
+	let p1 = searchM(keyJson);
 
 	Promise.all([p1]).then(() => {
-
-
-
-
 		json.tel			= keyJson.result.tel;
 		json.location		= keyJson.result.location;
 		json.yymmdd			= keyJson.result.yymmdd;
@@ -136,10 +122,9 @@ function method_updateM(req, res) {
 
 	let valueJson = {
 		$set: {
-			location  : json.location,
-			tel		  : json.tel,
-			yymmdd    : json.yymmdd,
-			updateDate: getSystemDate(),
+			location: json.location,
+			tel		: json.tel,
+			yymmdd	: json.yymmdd,
 		}
 	}
 
@@ -147,7 +132,7 @@ function method_updateM(req, res) {
 		upsert: true
     }
 
-	let p1 = corp_updateM(keyJson, valueJson, upsertJson);
+	let p1 = updateM2(keyJson, valueJson, upsertJson);
 
 	Promise.all([p1]).then(() => {
 		json.out_message = '更新しました';
@@ -188,7 +173,7 @@ function method_deleteM(req, res) {
 
 	let keyJson = { "corpName": reqJson.corpName }
 
-	let p1 = mongo_delete(keyJson);
+	let p1 = deleteM(keyJson);
 
 	Promise.all([p1]).then(() => {
 
@@ -298,92 +283,7 @@ function do_pdf01(req, res) {
 	doc.end();
 }
 
-//-----------------------------------------------------------------------------------------------------------------------
-async function corp_search(reqJson) {
 
-	let result = [];
-
-    let db = await getPostgresClient();
-
-    try {
-		let sql = "select count(key2) from t_0000 where key1 = 'nodeJs' and key2='1' and key3='" + reqJson.corpName + "'";
-
-		console.log('>> corp_search >>>>> sql=', sql);
-
-        await db.begin();
-        let rows = await db.execute(sql);
-
-		console.log('>> corp_search >>>>> rows=', rows);
-
-		reqJson.count = rows[0].count;
-
-		console.log('>> corp_search >>>>> reqJson.count=', reqJson.count);
-
-
-		if (reqJson.count > 0){
-			sql = "select * from t_0000 where key1 = 'nodeJs' and key2='1' and key3='" + reqJson.corpName + "'";
-			console.log('>>> corp_search >>>>2 sql=', sql);
-
-			result = await db.execute(sql);
-
-			console.log('>>> corp_search >>>> result=', result);
-
-			reqJson.result = result;
-
-		} else {
-			reqJson.result = '[]';
-			console.log('else >>> corp_search >>>> ????????');
-		}
-    } catch (e) {
-        await db.rollback();
-        throw e;
-    } finally {
-		await db.release();
-
-		return reqJson;
-    }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------
-async function video_search(reqJson) {
-
-	let result = [];
-
-	let db = await getPostgresClient();
-
-	let sql = "select count(key2) from t_0000 where key1 = 'nodeJs' and key2='1' and key3='" + reqJson.corpName + "'";
-
-	console.log('>> video_search 0 sql=', sql);
-
-	try {
-
-		await db.begin();
-		let rows = await db.execute(sql);
-
-		console.log('>> video_search 1 rows=', rows);
-
-		reqJson.count = rows[0].count;
-
-		if (reqJson.count > 0) {
-			sql = "select * from t_0000 where key1 = 'nodeJs' and key2='1' and key3='" + reqJson.corpName + "'";
-			console.log('>> video_search 2 sql=', sql);
-
-			result = await db.execute(sql);
-
-			console.log('>> video_search 3 result=', result);
-
-			reqJson.result = result;
-
-		} else {
-			console.log('>> video_search 4 else ????????');
-		}
-	} catch (e) {
-		await db.rollback();
-		throw e;
-	} finally {
-		await db.release();
-	}
-}
 //-----------------------------------------------------------------------------------------------------------------------
 async function transaction001() {
 
@@ -493,68 +393,5 @@ async function make_pdf(req, res) {
 	}
 }
 
-//-----------------------------------------------------------------------------------------------------------------------
-async function corp_searchM(json) {
-
-	let client = await MongoClient.connect(url, { useNewUrlParser: true })
-			.catch(err => { console.log(err); });
-
-	try {
-		let db = client.db(dbName);
-
-		let collection = db.collection('documents');
-
-		let result = await collection.findOne(json);
-
-		console.log('+++ corp_searchM result=', result);
-
-		json.result = result;
-
-	} catch (err) {
-		console.log(err);
-	} finally {
-		client.close();
-	}
-}
-
-//-----------------------------------------------------------------------------------------------------------------------
-async function corp_updateM(keyJson, valueJson, upsertJson) {
-
-	let client = await MongoClient.connect(url, { useNewUrlParser: true })
-		.catch(err => { console.log(err); });
-
-	try {
-		let db = client.db(dbName);
-
-		let collection = db.collection('documents');
-
-		let result = await collection.updateOne(keyJson, valueJson, upsertJson);
-
-	} catch (err) {
-		console.log(err);
-	} finally {
-		client.close();
-	}
-}
-
-//-----------------------------------------------------------------------------------------------------------------------
-async function mongo_delete(json) {
-
-	let client = await MongoClient.connect(url, { useNewUrlParser: true })
-		.catch(err => { console.log(err); });
-
-	try {
-		let db = client.db(dbName);
-
-		let collection = db.collection('documents');
-
-		let result = await collection.remove(json);
-
-	} catch (err) {
-		console.log(err);
-	} finally {
-		client.close();
-	}
-}
 
 module.exports = router;
