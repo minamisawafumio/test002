@@ -9,6 +9,7 @@
     <script src="/javascripts/jquery.min.js"></script>
 	<script src="/javascripts/vue-2.6.11/vue.js"></script>
     <script src="/javascripts/myjs/myNodeModule.js"></script>
+    <script src="/javascripts/myjs/systemModule.js"></script>
 
   </head>
   <body>
@@ -62,9 +63,6 @@
 			</div>
 			<div>
 				<input id="id_btn_02" type="button" name="nm_btn_02" value="０２ボタン" onclick="button_test02()"/>
-			</div>
-			<div>
-				<input id="id_btn_getJsonFifo" type="button" name="nm_btn_getJsonFifo" value="JSONデータ取得" onclick="button_getJsonFifo()"/>
 			</div>
 	  		<div>
 				<input id="id_back" type="button" name="test_002" value="戻る" onclick="btn_onclick('/main')"/>
@@ -211,10 +209,6 @@
 					wLastName = json.location;
 				}
 				vm1.lastName = wLastName;
-
-
-
-
 			}
 
 			//----------------------------------------------------------------------------------------------------------------
@@ -238,24 +232,6 @@
 				document.getElementById("i_01_01").value = jMap.time;
 				document.getElementById("i_03_01").value = jMap.j05;
 			}
-
-			//----------------------------------------------------------------------------------------------------------
-			function button_getJsonFifo(){
-				let json3 = get_utf8_hex_string_to_json('abcde');
-				let json3AA = JSON.stringify(json3);
-				console.log('@@@7777 //////****** button_getJsonFifo json3AA=', json3AA);
-			}
-
-
-
-
-
-
-
-
-
-
-
 		</script>
 
 	</body>

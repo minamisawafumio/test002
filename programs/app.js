@@ -11,10 +11,8 @@ var bodyParser      = require('body-parser');
 var mainRouter      = require('./routes/main');
 var registRouter    = require('./routes/regist');
 var searchRouter    = require('./routes/search');
-var usersRouter     = require('./routes/users');
 var calcRouter      = require('./routes/calc');
 var uploadRouter    = require('./routes/upload');
-var systemRouter    = require('./routes/system');
 
 var app = express();
 
@@ -46,9 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/main'		, mainRouter);
 app.use('/regist'	, registRouter);
 app.use('/search'	, searchRouter);
-app.use('/users'	, usersRouter);
 app.use('/calc'     , calcRouter);
 app.use('/upload'   , uploadRouter);
-app.use('/system'   , systemRouter);
 
 module.exports = app;

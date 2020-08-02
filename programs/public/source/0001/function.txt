@@ -30,16 +30,38 @@
 	//-------------------------------------
 	function func002(iSt){
 
+		let json = {
+			methodName    : 'rtn_func002',
+			doServerMethod: 'method_func002',
+			corpName: '111',
+		}
+
+		postData("/search/execute01", json);
+	}
+
+	function rtn_func002(resData, textStatus, jqXHR){
+		let hexSt = resData.hexSt;
+		let json = utf8_hex_string_to_json(hexSt);
+
+		console.log('++++ rtn_func002 json=', JSON.stringify(json));
 
 		let dateTime = new Date().getTime();
-		let dateSt = new Date(dateTime);
-		let data01 = getElemVal("id_inputName02");
+		let dateSt   = new Date(dateTime);
+		let data01   = getElemVal("id_inputName02");
 
-		
-		vm1.out_data = formatDate(dateSt) + iSt + 'func002' + data01;
+
+		vm1.out_data = formatDate(dateSt) + 'func002' + data01;
+
 	}
+
+
 	//-------------------------------------
 	function func003(iSt){
+		let jsn = aaaavvvvv('minami_');
+
+		console.log('++++ jsn1=', jsn.abcd1);
+		console.log('++++ jsn2=', jsn.abcd2);
+		console.log('++++ jsn3=', jsn.abcd3);
 
 
 		let dateTime = new Date().getTime();

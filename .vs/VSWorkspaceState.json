@@ -2,14 +2,16 @@
   "ExpandedNodes": [
     "",
     "\\programs",
-    "\\programs\\public (2)\\javascripts",
-    "\\programs\\public (2)\\javascripts\\myjs",
-    "\\programs\\public (2)\\source",
-    "\\programs\\public (2)\\source\\0001",
+    "\\programs\\public",
+    "\\programs\\public\\javascripts",
+    "\\programs\\public\\javascripts\\myjs",
     "\\programs\\public\\source",
     "\\programs\\public\\source\\0001",
-    "\\programs\\views (2)"
+    "\\programs\\routes",
+    "\\programs\\views",
+    "\\programs\\views\\main",
+    "\\programs\\views\\workFlow"
   ],
-  "SelectedNode": "\\programs\\public (2)",
+  "SelectedNode": "\\programs\\public\\javascripts\\myjs\\myNodeModule.js",
   "PreviewInSolutionExplorer": false
 }

@@ -12,17 +12,9 @@ sendRequest = function (form) {
 //メソッド実行-----------------------------------------------------------------------------------------------------
 done = function (resData, textStatus, jqXHR) {
     let hexSt = resData.hexSt;
-
-    console.log('============== done string =', utf8_hex_string_to_string(hexSt));
-
     let json = utf8_hex_string_to_json(hexSt);
-
     let methodName = json.methodName;
- 
-    console.log('============== done methodName =', methodName);
-
     let executeName = methodName + "(resData, textStatus, jqXHR);";
-
     eval(executeName);
 }
 
@@ -116,11 +108,7 @@ get_utf8_hex_string_to_json = function (iKey) {
 
 //---------------------------------------------------------------------------------------------------------------------
 get_json_from_request = function (req) {
-
     let hexStr = req.body.hexStr;
-
-    console.log('/////// get_json_from_request = ', utf8_hex_string_to_string(hexStr));
-
     return utf8_hex_string_to_json(hexStr);
 }
 
@@ -425,4 +413,8 @@ function formatDate(dt) {
     var s =  ('00' + dt.getSeconds()).slice(-2);
     var ms = ('000' + dt.getMilliseconds()).slice(-3);
     return (y + m + d + h + mi + s + ms);
+}
+
+aaaavvvvvOYA = function (iStr) {
+    console.log('aaaavvvvvOYA' + iStr);
 }

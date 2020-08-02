@@ -7,8 +7,9 @@
 	<link rel="stylesheet" href="/stylesheets/myMain.css" />
 
     <script src="/javascripts/jquery.min.js"></script>
-		<script src="/javascripts/vue-2.6.11/vue.js"></script>
+	<script src="/javascripts/vue-2.6.11/vue.js"></script>
     <script src="/javascripts/myjs/myNodeModule.js"></script>
+    <script src="/javascripts/myjs/systemModule.js"></script>
     
     <style>
     .alert {
@@ -78,13 +79,10 @@
 		let rtnHex = "<%= hexSt %>";
 
 		let rtnJson = utf8_hex_string_to_json(rtnHex);
-		console.log('rtnJson=', JSON.stringify(rtnJson));
-
 
 		let businessListSt = utf8_hex_string_to_string(rtnJson.j_businessList);
 
 		console.log('businessListSt=',businessListSt);
-
 
 		let elem = document.getElementById('id_list');
 		let elem0 = document.getElementById('id_list0');
@@ -92,8 +90,8 @@
 		
 		elem.innerHTML = businessListSt;
 
-		let w_buffSt1 = utf8_hex_string_to_string(rtnJson.j_buffSt1);
-		let w_buffSt2 = utf8_hex_string_to_string(rtnJson.j_buffSt2);
+		let w_buffSt1 = utf8_hex_string_to_string(rtnJson.j_fileDataArray[0]);
+		let w_buffSt2 = utf8_hex_string_to_string(rtnJson.j_fileDataArray[1]);
 
 
 

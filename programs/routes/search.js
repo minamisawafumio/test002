@@ -88,11 +88,14 @@ function method_001M(req, res) {
 	let p1 = searchM(keyJson);
 
 	Promise.all([p1]).then(() => {
-		json.tel			= keyJson.result.tel;
-		json.location		= keyJson.result.location;
-		json.yymmdd			= keyJson.result.yymmdd;
-		json.out_message	 = '検索できました';
-		console.log('++method_001M json=', JSON.stringify(keyJson));
+		if (keyJson.result == null) {
+			json.out_message = '該当データなし';
+		} else {
+			json.out_message = '検索できました';
+			json.tel = keyJson.result.tel;
+			json.location = keyJson.result.location;
+			json.yymmdd = keyJson.result.yymmdd;
+        }
 		let resJson = makeJson(json);
 		res.json(resJson);
 	}).catch(function (error) {
@@ -212,6 +215,37 @@ function method_002(req, res) {
 		resJson.count = '失敗です';
 		let json = makeJson(reqJson);
 		res.json(json);
+	});
+}
+
+//--------------------------------------------------------------------------------------
+function method_func002(req, res) {
+	console.log(getNowDate() + ' ======== method_func002', '==================');
+
+	let json = get_json_from_request(req);
+
+	let keyJson = {
+		corpName: json.corpName
+	}
+
+	let p1 = searchM(keyJson);
+
+	Promise.all([p1]).then(() => {
+		if (keyJson.result == null) {
+			json.out_message = '該当データなし';
+		} else {
+			json.out_message = '検索できました';
+			json.tel = keyJson.result.tel;
+			json.location = keyJson.result.location;
+			json.yymmdd = keyJson.result.yymmdd;
+		}
+		let resJson = makeJson(json);
+		res.json(resJson);
+	}).catch(function (error) {
+		console.error("失敗<><><><><><><><><> error:", error.message);
+		json.out_message = '該当データはありません';
+		let resJson = makeJson(json);
+		res.json(resJson);
 	});
 }
 

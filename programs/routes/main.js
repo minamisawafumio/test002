@@ -59,12 +59,14 @@ router.post("/searchStart", function (req, res) {
 router.post("/workFlowStart", function (req, res) {
 
 	let businessJson = {
-		j_file1: "./public/source/0001/gamen.txt",
-		j_file2: "./public/source/0001/function.txt"
+		j_fileArray: [
+						"./public/source/0001/gamen.txt",
+						"./public/source/0001/function.txt"
+		],
 	};
 
 	// テキストファイルを読んで、コンソール出力する
-	let p1 = displayFile(businessJson);
+	let p1 = displayFileArray(businessJson);
 
 	Promise.all([p1]).then(() => {
 
@@ -82,8 +84,12 @@ router.post("/workFlowStart", function (req, res) {
 		
 		reqJson.j_buffSt = string_to_utf8_hex_string(gamenSt);
 
-		reqJson.j_buffSt1 = string_to_utf8_hex_string(businessJson.j_buffSt1);
-		reqJson.j_buffSt2 = string_to_utf8_hex_string(businessJson.j_buffSt2);
+		reqJson.j_fileDataArray = [];
+
+		for (let i = 0; i < businessJson.j_fileDataArray.length; i++) {
+			reqJson.j_fileDataArray[i] = string_to_utf8_hex_string(businessJson.j_fileDataArray[i]);
+        } 
+
 		reqJson.j_data = "みなみさわ";
 		let resJson = makeJson(reqJson);
 
@@ -192,5 +198,21 @@ const displayFile = async (iJson) => {
 		iJson.j_buffSt2 = buff2.toString();
 	}
 };
+
+//指定ファイルを読込み入力JSONの要素に配備して返す-------------------------------------------
+const displayFileArray = async (iJson) => {
+
+	iJson.j_fileDataArray = [];
+	 
+	try {
+		for (let i = 0; iJson.j_fileArray.length; i++) {
+			iJson.j_fileDataArray[i] = await fs.readFileSync(iJson.j_fileArray[i], "utf-8");
+        }
+	} catch (e) {
+		console.log(e.message);
+	}
+};
+
+
 
 module.exports = router;
